@@ -1,0 +1,168 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  app
+
+   SAM Template for parental guide
+
+Globals:
+  Function:
+    Timeout: 30
+  Api:
+    Cors:
+      AllowMethods: "'GET,PUT,POST,OPTIONS,DELETE'"
+      AllowHeaders: "'content-type'"
+      AllowOrigin: "'http://localhost:3002'"
+      AllowCredentials: "'*'"
+Resources:
+  ParentalGuideFunctionCreateParent:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: parental_guide/
+      Handler: createParent.lambda_handler
+      Runtime: python3.9
+      Timeout: 60
+      Architectures:
+        - x86_64
+      Events:
+        ParentalGuide:
+          Type: Api
+          Properties:
+            Path: /post
+            Method: post
+  ParentalGuideFunctionGetParents:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: parental_guide/
+      Handler: getParents.lambda_handler
+      Runtime: python3.9
+      Timeout: 60
+      Architectures:
+        - x86_64
+      Events:
+        ParentalGuide:
+          Type: Api
+          Properties:
+            Path: /parents
+            Method: get
+  ParentalGuideFunctionGetOneParent:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: parental_guide/
+      Handler: getOneParent.lambda_handler
+      Runtime: python3.9
+      Timeout: 60
+      Architectures:
+        - x86_64
+      Events:
+        ParentalGuide:
+          Type: Api
+          Properties:
+            Path: /parent/{id}
+            Method: get
+  ParentalGuideFunctionDeleteParent:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: parental_guide/
+      Handler: deleteParent.lambda_handler
+      Runtime: python3.9
+      Timeout: 60
+      Architectures:
+        - x86_64
+      Events:
+        ParentalGuide:
+          Type: Api
+          Properties:
+            Path: /parent/{id}
+            Method: delete
+  ParentalGuideFunctionUpdateParent:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: parental_guide/
+      Handler: updateParent.lambda_handler
+      Runtime: python3.9
+      Timeout: 60
+      Architectures:
+        - x86_64
+      Events:
+        ParentalGuide:
+          Type: Api
+          Properties:
+            Path: /update/{id}
+            Method: put
+  ####################### CALCULATION ################################
+  CreateCalc:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: parental_guide/
+      Handler: createCalc.lambda_handler
+      Runtime: python3.9
+      Timeout: 60
+      Architectures:
+        - x86_64
+      Events:
+        ParentalGuide:
+          Type: Api
+          Properties:
+            Path: /postCalc
+            Method: post
+  GetCalc:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: parental_guide/
+      Handler: getCalc.lambda_handler
+      Runtime: python3.9
+      Timeout: 60
+      Architectures:
+        - x86_64
+      Events:
+        ParentalGuide:
+          Type: Api
+          Properties:
+            Path: /calculations
+            Method: get
+  GetOneCalc:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: parental_guide/
+      Handler: getOneCalc.lambda_handler
+      Runtime: python3.9
+      Timeout: 60
+      Architectures:
+        - x86_64
+      Events:
+        ParentalGuide:
+          Type: Api
+          Properties:
+            Path: /calculation/{id}
+            Method: get
+  DeleteCalc:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: parental_guide/
+      Handler: deleteCalc.lambda_handler
+      Runtime: python3.9
+      Timeout: 60
+      Architectures:
+        - x86_64
+      Events:
+        ParentalGuide:
+          Type: Api
+          Properties:
+            Path: /calculation/{id}
+            Method: delete
+  UpdateCalc:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: parental_guide/
+      Handler: updateCalc.lambda_handler
+      Runtime: python3.9
+      Timeout: 60
+      Architectures:
+        - x86_64
+      Events:
+        ParentalGuide:
+          Type: Api
+          Properties:
+            Path: /calculation/{id}
+            Method: put
